@@ -1,51 +1,59 @@
 from flask import Flask, render_template, request, jsonify
-import pandas as pd
+import pickle
+import numpy as np
 
 app = Flask(__name__)
 
-df = pd.read_csv('dataset.csv')
+with open('model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
+
+EXPECTED_FEATURES = 45
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/herb/predict', methods=['POST'])
-def recommend_plants():
-    selected_symptoms = request.json.get('symptoms', [])
+@app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        data = request.get_json()
 
-    if not selected_symptoms:
+        if 'features' not in data:
+            return jsonify({
+                "code": "400",
+                "message": "Missing 'features' in request data",
+                "result data": None
+            }), 400
+
+        features = data['features']
+
+        if len(features) != EXPECTED_FEATURES:
+            return jsonify({
+                "code": "400",
+                "message": f"Expected {EXPECTED_FEATURES} features, but got {len(features)}.",
+                "result data": None
+            }), 400
+
+        features_array = np.array(features)
+
+        features_array = features_array.reshape(1, -1)
+
+        prediction = model.predict(features_array)
+
         return jsonify({
-            'code': 400,
-            'message': 'No symptoms provided',
-            'data': None
-        }), 400
+            "code": "200",
+            "message": "Prediction successful",
+            "result data": {
+                "prediction": prediction.tolist()
+            }
+        }), 200
 
-    recommended_plants = []
-
-    for index, row in df.iterrows():
-        plant_symptoms = row['symptoms'].split(',')
-        if any(symptom in plant_symptoms for symptom in selected_symptoms):
-            recommended_plants.append({
-                'herbs': row['herbs'],
-                'latin_name': row['latin_name'],
-                'symptoms': plant_symptoms,
-                'usage_method': row['usage_method']
-            })
-
-    if not recommended_plants:
+    except Exception as e:
         return jsonify({
-            'code': 404,
-            'message': 'No plants match the selected symptoms',
-            'data': None
-        }), 404
-
-    recommended_plants.sort(key=lambda x: x['latin_name'], reverse=True)
-
-    return jsonify({
-        'code': 200,
-        'message': 'Successfully recommended plants',
-        'data': recommended_plants
-    }), 200
+            "code": "500",
+            "message": str(e),
+            "result data": None
+        }), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
