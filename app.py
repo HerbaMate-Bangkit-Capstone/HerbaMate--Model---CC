@@ -13,7 +13,7 @@ EXPECTED_FEATURES = 45
 def home():
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
+@app.route('/herb/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
