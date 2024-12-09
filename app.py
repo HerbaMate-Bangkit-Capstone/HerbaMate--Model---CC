@@ -9,6 +9,10 @@ with open('model.pkl', 'rb') as model_file:
 
 EXPECTED_FEATURES = 45
 
+def extract_features_from_symptoms(symptoms):
+    features = np.zeros(EXPECTED_FEATURES)
+    return features
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -18,14 +22,18 @@ def predict():
     try:
         data = request.get_json()
 
-        if 'features' not in data:
+        if 'symptoms' not in data:
             return jsonify({
                 "code": "400",
-                "message": "Missing 'features' in request data",
+                "message": "Missing 'symptoms' in request data",
                 "result data": None
             }), 400
 
-        features = data['features']
+        symptoms_input = data['symptoms']
+
+        symptoms_list = symptoms_input.split(',')
+
+        features = extract_features_from_symptoms(symptoms_list)
 
         if len(features) != EXPECTED_FEATURES:
             return jsonify({
@@ -34,9 +42,7 @@ def predict():
                 "result data": None
             }), 400
 
-        features_array = np.array(features)
-
-        features_array = features_array.reshape(1, -1)
+        features_array = np.array(features).reshape(1, -1)
 
         prediction = model.predict(features_array)
 
