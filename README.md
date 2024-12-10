@@ -8,7 +8,7 @@ Aplikasi di deploy menggunakan Google Cloud Run melalui Google Cloud Build dan G
 ## Key Features
 - Herb Recommendations
   
-## Instalasi
+## Installation
 Langkah-langkah untuk menginstal dan menjalankan proyek ini di lokal.
 1. Clone repositori ini:
    ```bash
