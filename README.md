@@ -27,8 +27,12 @@ Langkah-langkah untuk menginstal dan menjalankan proyek ini di lokal.
    python app.py
 
 4. Lakukan request menggunakan Postman:
-   Endpoint  : http://localhost:5000/herb/predict
+   Endpoint  :
+   ```bash
+   http://localhost:5000/herb/predict
+   
    Request   :
+   ```bash
      {
         "symptoms": "Batuk,Sakit tenggorokan,Perut kembung,Mual"
      }
