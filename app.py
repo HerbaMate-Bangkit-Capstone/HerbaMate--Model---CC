@@ -5,7 +5,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-with open('model.pkl', 'rb') as model_file:
+with open('model_herb.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 dataset = pd.read_csv('dataset.csv')
