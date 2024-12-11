@@ -1,35 +1,58 @@
 # Project Name
-Program Backend API untuk Model Machine Learning
+Program Backend API for Machine Learning Models.
 
 ## Description
-Program ini menggunakan kerangka kerja Flask Python yang dimana akan memberikan rekomendasi tanaman herbal berdasarkan gejala yang di request dan nilai prediction dari Model Machine Learning.
-Aplikasi di deploy menggunakan Google Cloud Run melalui Google Cloud Build dan Google Container Registry.
+This program uses the Flask Python framework which will provide herbal plant recommendations based on the symptoms requested and the prediction value of the Machine Learning Model.
+Applications are deployed using Google Cloud Run through Google Cloud Build and Google Container Registry.
 
 ## Key Features
 - Herb Recommendations
   
 ## Installation
-Langkah-langkah untuk menginstal dan menjalankan proyek ini di lokal.
-1. Clone repositori ini:
+Steps to install and run this project on local.
+1. Clone this repository:
    ```bash
    git clone https://github.com/HerbaMate-Bangkit-Capstone/HerbaMate--Model---CC.git
-
-2. Extract dan masuk ke folder project:
+   
+2. Extract and go to the project folder:
    ```bash
    cd HerbaMate--Model---CC
-
-3. Jalankan project:
+   
+3. Run the project:
    ```bash
    python app.py
-
-4. Lakukan request menggunakan Postman:
+   
+4. URL Project Localhost:
    ```bash
    http://localhost:5000/herb/predict
-
-5. Contoh request:
-   ```bash
-     {
-        "symptoms": "Batuk,Sakit tenggorokan,Perut kembung,Mual"
-     }
-
+   
+5. Make a request using Postman:
+   - Post symptoms to get recommendations:
+     - Request:
+       ```bash
+       {
+           "symptoms": "Batuk,Sakit tenggorokan,Perut kembung,Mual"
+       }
+       
+     - Response:
+       ```bash
+       {
+          "code": 200,
+          "message": "Successful herbs recommendations",
+          "prediction score": 0.09604641795158386,
+          "result data": [
+              {
+                  "herbs": "Adas",
+                  "image_link": "image_link_herbals",
+                  "latin_name": "(Foeniculum vulgare)",
+                  "usage_method": "Rebus 1-2 sendok teh biji adas dalam 1,5 gelas air hingga tersisa sekitar satu gelas. Setelah mendidih, saring air rebusan dan minum selagi hangat. Air                                    rebusan ini dapat diminum 2-3 kali sehari untuk membantu meredakan batuk, karena adas memiliki sifat ekspektoran yang membantu mengencerkan lendir dan                                     melegakan saluran pernapasan."
+               },
+               {
+                  "herbs": "Daun jintan",
+                  "image_link": "image_link_herbals",
+                  "latin_name": "(Coleus amboinicus)",
+                  "usage_method": "Haluskan 5-7 lembar daun jintan dengan sedikit air, lalu peras dan ambil sarinya. Minum sari daun jintan ini sekali sehari untuk membantu meredakan                                        batuk, berkat sifat ekspektoran yang membantu mengencerkan lendir."
+                }
+            ]
+        }
 
