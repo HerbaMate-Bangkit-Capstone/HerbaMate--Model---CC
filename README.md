@@ -18,15 +18,19 @@ Steps to install and run this project on local.
    ```bash
    cd HerbaMate--Model---CC
    
-3. Run the project:
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+
+4. Run the project:
    ```bash
    python app.py
    
-4. URL Project Localhost:
+5. URL Project Localhost:
    ```bash
    http://localhost:5000/herb/predict
    
-5. Make a request using Postman:
+6. Make a request using Postman:
    - Post symptoms to get recommendations:
      - Request:
        ```bash
