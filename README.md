@@ -6,7 +6,7 @@ This program uses the Flask Python framework which will provide herbal plant rec
 Applications are deployed using Google Cloud Run through Google Cloud Build and Google Container Registry.
 
 ## Key Features
-- Herb Recommendations
+- Recommendation features
   
 ## Installation
 Steps to install and run this project on local.
